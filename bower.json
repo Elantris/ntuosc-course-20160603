@@ -16,6 +16,6 @@
   ],
   "dependencies": {
     "skeleton": "^2.0.4",
-    "dropzone": "^4.3.0"
+    "color-thief": "^2.0.1"
   }
 }

@@ -20,7 +20,6 @@
   "homepage": "https://github.com/Elantris/ntuosc-course-20160603#readme",
   "dependencies": {
     "cli-color": "^1.1.0",
-    "color-thief": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.1",
     "gulp-rename": "^1.2.2",

@@ -50,7 +50,7 @@ gulp.task('move', function() {
 
 	gulp.src([
 			'./node_modules/jquery/dist/jquery.min.js',
-			'./node_modules/color-thief/js/color-thief.js',
+			'./bower_components/color-thief/dist/color-thief.min.js',
 		])
 		.pipe(concat('lib.min.js'))
 		.pipe(uglify({ mangle: false }))
