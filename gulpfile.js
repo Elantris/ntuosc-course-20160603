@@ -8,7 +8,7 @@ var gulpif = require('gulp-if'); // https://github.com/robrich/gulp-if
 
 var production = (process.env.NODE_ENV === 'production');
 
-gulp.task('default', []);
+gulp.task('default', ['move', 'pug', 'sass', 'react']);
 
 
 
@@ -19,7 +19,15 @@ gulp.task('default', []);
 var browserSync = require('browser-sync').create(); // https://github.com/Browsersync/browser-sync
 var reload = browserSync.reload;
 
-gulp.task('watch', []);
+gulp.task('browser-sync', function() {
+	browserSync.init({
+		server: {
+			baseDir: "./"
+		}
+	});
+});
+
+gulp.task('watch', ['pug:watch', 'sass:watch', 'react:watch', 'browser-sync']);
 
 
 
@@ -31,7 +39,23 @@ var cssmin = require('gulp-cssmin'); // https://github.com/chilijung/gulp-cssmin
 var uglify = require('gulp-uglify'); // https://github.com/terinjokes/gulp-uglify
 var concat = require('gulp-concat'); // https://github.com/contra/gulp-concat
 
-gulp.task('move', function() {});
+gulp.task('move', function() {
+	gulp.src([
+			'./bower_components/skeleton/css/normalize.css',
+			'./bower_components/skeleton/css/skeleton.css',
+		])
+		.pipe(concat('lib.min.css'))
+		.pipe(cssmin())
+		.pipe(gulp.dest('./public/css/'));
+
+	gulp.src([
+			'./node_modules/jquery/dist/jquery.min.js',
+			'./node_modules/color-thief/js/color-thief.js',
+		])
+		.pipe(concat('lib.min.js'))
+		.pipe(uglify({ mangle: false }))
+		.pipe(gulp.dest('./public/js/'));
+});
 
 
 
@@ -41,9 +65,15 @@ gulp.task('move', function() {});
 
 var pug = require('gulp-pug'); // https://github.com/jamen/gulp-pug
 
-gulp.task('pug', function() {});
+gulp.task('pug', function() {
+	gulp.src('./src/views/*.pug')
+		.pipe(pug())
+		.pipe(gulp.dest('./'));
+});
 
-gulp.task('pug:watch', ['pug'], function() {});
+gulp.task('pug:watch', ['pug'], function() {
+	gulp.watch('./src/views/**/*.pug', ['pug', reload]);
+});
 
 
 
@@ -55,9 +85,18 @@ gulp.task('pug:watch', ['pug'], function() {});
 
 var sass = require('gulp-sass'); // https://github.com/dlmanning/gulp-sass
 
-gulp.task('sass', function() {});
+gulp.task('sass', function() {
+	gulp.src('./src/styles/*.scss')
+		.pipe(gulpif(production, sourcemaps.init()))
+		.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+		.pipe(gulpif(production, sourcemaps.write()))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest('./public/css/'));
+});
 
-gulp.task('sass:watch', ['sass'], function() {});
+gulp.task('sass:watch', ['sass'], function() {
+	gulp.watch('./src/styles/**/*.scss', ['sass', reload]);
+});
 
 
 
@@ -78,9 +117,18 @@ var b = browserify('./src/scripts/main.jsx', {
 	transform: [reactify]
 });
 
-gulp.task('react', function() {});
+gulp.task('react', function() {
+	bundle();
+});
 
-gulp.task('react:watch', ['react'], function() {});
+gulp.task('react:watch', ['react'], function() {
+	b.plugin(watchify);
+	b.on('log', function(msg) {
+		colorLog('yellowBright', msg);
+		reload();
+	});
+	b.on('update', bundle);
+});
 
 function bundle() {
 	b.bundle()
