@@ -1,0 +1,44 @@
+{
+  "name": "ntuosc-course-20160603",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "pnpm install && NODE_ENV=production gulp",
+    "test": "NODE_ENV=production gulp watch",
+    "build:all": "NODE_ENV=production gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elantris/ntuosc-course-20160603.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Elantris/ntuosc-course-20160603/issues"
+  },
+  "homepage": "https://github.com/Elantris/ntuosc-course-20160603#readme",
+  "dependencies": {
+    "cli-color": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.1",
+    "gulp-rename": "^1.2.2",
+    "moment": "^2.13.0",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.12.10",
+    "browserify": "^13.0.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-pug": "^3.0.2",
+    "gulp-sass": "^2.3.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "reactify": "^1.1.1",
+    "watchify": "^3.7.0"
+  }
+}

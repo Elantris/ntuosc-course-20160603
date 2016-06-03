@@ -1,0 +1,20 @@
+{
+  "name": "ntuosc-course-20160603",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Elantris <j88107333@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Elantris/ntuosc-course-20160603",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "skeleton": "^2.0.4"
+  }
+}
